@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Register and Login</title>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="message {{ category }}">
+                    {{ message }}
+                    <div class="progress-bar"></div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+    <div class="container">
+        <div class="form-wrapper">
+            <h1>Register User</h1>
+            <form action="{{ url_for('register') }}" method="POST">
+               
+                <input type="text" id="name" name="name" placeholder="Name" required>
+               
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <div class="form-wrapper">
+            <h1>Login User</h1>
+            <form action="{{ url_for('login') }}" method="POST">
+              
+                <input type="text" id="login_name" name="name" placeholder="Name" required>
+              
+                <input type="password" id="login_password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.message').forEach(msg => {
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 500);
+            });
+        }, 5000);
+    </script>
+
+</body>
+</html>

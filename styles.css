@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    width: 800px;
+    max-width: 100%;
+    min-height: 300px;
+    display: flex;
+    justify-content: space-between; /* Formularze obok siebie */
+    align-items: center;
+    padding: 30px;
+}
+
+.form-wrapper {
+    width: 48%; /* Każdy formularz zajmuje połowę kontenera */
+    text-align: center;
+}
+
+h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    background-color: #eee;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+}
+
+button {
+    background-color: #512da8;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #3d1e91;
+}
+
+.flash-messages {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    z-index: 1000;
+}
+
+.message {
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    color: white;
+    position: relative;
+}
+
+.message.success {
+    background-color: #4CAF50; /* Zielony dla sukcesu */
+}
+
+.message.error {
+    background-color: #f44336; /* Czerwony dla błędów */
+}
+
+.progress-bar {
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: progress 3s linear forwards;
+}
+
+@keyframes progress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* Ukrywanie komunikatu po 5 sekundach */
+.message {
+    animation: fadeOut 3s linear forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+

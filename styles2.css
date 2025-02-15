@@ -1,0 +1,179 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+.calendar-container, .events-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #007bff;
+}
+.calendar-days, .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+.calendar-grid div {
+    padding: 15px;
+    background: #e9ecef;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+.calendar-grid div:hover, .calendar-grid .selected {
+    background: #007bff;
+    color: white;
+}
+.logout-btn {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.logout-btn:hover {
+    background-color: darkred;
+}
+.form-container {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    transform: none;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+.form-container button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.form-container .add-event {
+    background-color: #28a745;
+    color: white;
+}
+.form-container .close-form {
+    background-color: #dc3545;
+    color: white;
+}
+.form-container label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: left;
+}
+.form-container input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.events-container h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.events-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.events-container li {
+    background: #e9ecef;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.flash-messages {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    z-index: 1000;
+}
+
+.message {
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    color: white;
+    position: relative;
+}
+
+.message.success {
+    background-color: #4CAF50; /* Zielony dla sukcesu */
+}
+
+.message.error {
+    background-color: #f44336; /* Czerwony dla błędów */
+}
+
+.progress-bar {
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: progress 3s linear forwards;
+}
+
+@keyframes progress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* Ukrywanie komunikatu po 5 sekundach */
+.message {
+    animation: fadeOut 3s linear forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+.today {
+    font-weight: bold;
+    color: rgb(255, 5, 5);
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css') }}">
+    <title>Stylish Calendar</title>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="message {{ category }}">
+                    {{ message }}
+                    <div class="progress-bar"></div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+    <button class="logout-btn" onclick="window.location.href='/logout'">Logout</button>
+  
+    
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prevMonth">&#10094;</button>
+            <h2 id="monthYear"></h2>
+            <button id="nextMonth">&#10095;</button>
+        </div>
+        <div class="calendar-days">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+        <div class="calendar-grid" id="calendar"></div>
+    </div>
+    
+    <div class="events-container">
+        <h2>Your Events</h2>
+    <ul id="eventsList">
+        {% for event in events|reverse %}
+            <li data-date="{{ event[0] }}T{{ event[1] }}">
+                {{ event[0] }} {{ event[1] }} - {{ event[2] }}
+                <form action="/delete_event" method="POST" style="display:inline;">
+                    <input type="hidden" name="event_date" value="{{ event[0] }}">
+                    <input type="hidden" name="event_time" value="{{ event[1] }}">
+                    <button type="submit" style="background:none; color:red; border:none; cursor:pointer;">🗑️</button>
+                </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="form-container" id="formContainer">
+        <form action="/add_event" method="POST">
+            <label>Date:</label>
+            <input type="date" name="event_date" id="eventDate" required><br>
+            <label>Time:</label>
+            <input type="time" name="event_time" required><br>
+            <label>Description:</label>
+            <input type="text" name="description" required><br>
+            <button type="submit" class="add-event">Add Event</button>
+            <button type="button" class="close-form" id="closeFormButton">Close</button>
+        </form>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const monthYear = document.getElementById("monthYear");
+            const calendarGrid = document.getElementById("calendar");
+            const prevMonth = document.getElementById("prevMonth");
+            const nextMonth = document.getElementById("nextMonth");
+            const formContainer = document.getElementById("formContainer");
+            const eventDateInput = document.getElementById("eventDate");
+            const closeFormButton = document.getElementById("closeFormButton");
+            let currentDate = new Date();
+    
+            function renderCalendar() {
+                calendarGrid.innerHTML = "";
+                const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+                const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+                const today = new Date();
+    
+                for (let i = 0; i < firstDay; i++) {
+                    calendarGrid.innerHTML += "<div></div>";
+                }
+    
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement("div");
+                    dayElement.textContent = day;
+    
+                 
+                    if (day === today.getDate() && currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear()) {
+                        dayElement.classList.add("today");
+                    }
+    
+                    dayElement.addEventListener("click", function () {
+                        document.querySelectorAll(".calendar-grid div").forEach(div => div.classList.remove("selected"));
+                        dayElement.classList.add("selected");
+                        formContainer.style.display = "block";
+                        eventDateInput.value = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`; 
+                    });
+    
+                    calendarGrid.appendChild(dayElement);
+                }
+    
+                monthYear.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
+            }
+    
+            prevMonth.addEventListener("click", function () { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
+            nextMonth.addEventListener("click", function () { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
+            closeFormButton.addEventListener("click", function () { formContainer.style.display = "none"; });
+    
+            renderCalendar();
+        });
+    </script>
+</body>
+</html>
